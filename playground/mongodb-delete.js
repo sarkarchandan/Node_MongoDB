@@ -32,7 +32,7 @@ MongoClient.connect(url,(error, client) => {
     console.log(`Could not delete one document from MongoDB due to: ${error}`);
   });
 
-  // Find one and delete
+  // Find one document and delete
   db.collection(myTODOAppMyTODOsCollection).findOneAndDelete({
     completed: false
   }).then((document) => {
@@ -41,6 +41,7 @@ MongoClient.connect(url,(error, client) => {
     console.log(`Could not find one document and delete due to: ${error}`);
   });
 
+  //Find one document and delete.
   db.collection(myTODOAppUsersCollection).findOneAndDelete({
     name: "Vesemyr"
   }).then((document) => {
@@ -49,6 +50,7 @@ MongoClient.connect(url,(error, client) => {
     console.log(`Could not find one document and delete from MongoDB due to: ${error}`);
   });
 
+  //Delete one document
   db.collection(myTODOAppUsersCollection).deleteOne({
     _id: new ObjectID("5b02e7e75f6b1714d5ea087c")
   }).then((result) => {

@@ -14,6 +14,7 @@ MongoClient.connect(url, (error, client) => {
 
   const db = client.db(myTODOAppDB);
 
+  //Find all documents
   db.collection(myTODOAppMyTODOsCollection).find().toArray().then((documents) => {
     console.log("Fetching All TODOs...");
     console.log(JSON.stringify(documents, undefined, 2));
@@ -21,6 +22,8 @@ MongoClient.connect(url, (error, client) => {
     console.log(`Fetch form mongodb failed with: ${error}`);
   });
 
+
+  //Find one document by some property value
   db.collection(myTODOAppMyTODOsCollection).find({
     completed: false
   }).toArray()
@@ -31,6 +34,7 @@ MongoClient.connect(url, (error, client) => {
     console.log(`Could not fethc data due to: ${error}`);
   });
 
+  //Find one document by ObjectID (MongoDB's _id property)
   db.collection(myTODOAppUsersCollection).find(
     {
       _id: new ObjectID("5b02e7e75f6b1714d5ea087c")
@@ -43,6 +47,7 @@ MongoClient.connect(url, (error, client) => {
     console.log(`Could not fetch from mongodb due to: ${error}`);
   });
   
+  //Find document count from a collection in MongoDB
   db.collection(myTODOAppUsersCollection).count().then((count) => {
     console.log("Fetching total users count...");
     console.log(`Total User Count: ${count}`);
@@ -50,6 +55,7 @@ MongoClient.connect(url, (error, client) => {
     console.log(`Could not fetch from mongodb due to: ${error}`);
   })
 
+  //Find one document by some property value
   db.collection(myTODOAppUsersCollection).find(
     {
       name: "Vesemyr"

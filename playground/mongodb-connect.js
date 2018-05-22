@@ -14,27 +14,28 @@ MongoClient.connect(url,(error, client) => {
   console.log("Connected to the mongo database server.");
   const db = client.db(myTODOAppDB);
 
-  // db.collection(myTODOAppMyTODOsCollection).insertOne({
-  //   text: "Play Assassin's Creed Syndicate",
-  //   completed: true
-  // }, (error, result) => {
-  //   if(error) {
-  //     return console.log(`Unable to insert todo due to: ${error}`);
-  //   }
-  //   console.log(JSON.stringify(result.ops, undefined, 2));
-  // });
+  //Inserting one document to certain collection
+  db.collection(myTODOAppMyTODOsCollection).insertOne({
+    text: "Play Assassin's Creed Syndicate",
+    completed: true
+  }, (error, result) => {
+    if(error) {
+      return console.log(`Unable to insert todo due to: ${error}`);
+    }
+    console.log(JSON.stringify(result.ops, undefined, 2));
+  });
 
-  // db.collection(myTODOAppUsersCollection).insertOne({
-  //   name: "Vesemyr",
-  //   age: 70,
-  //   location: "Vizima"
-  // }, (error, result) => {
-  //   if(error) {
-  //     return console.log(`Unable to insert user due to: ${error}`);
-  //   }
-  //   console.log(JSON.stringify(result.ops, undefined, 2));
-  //   console.log(result.ops[0]._id.getTimestamp());
-  // });
+  db.collection(myTODOAppUsersCollection).insertOne({
+    name: "Vesemyr",
+    age: 70,
+    location: "Vizima"
+  }, (error, result) => {
+    if(error) {
+      return console.log(`Unable to insert user due to: ${error}`);
+    }
+    console.log(JSON.stringify(result.ops, undefined, 2));
+    console.log(result.ops[0]._id.getTimestamp());
+  });
 
   client.close();
 });

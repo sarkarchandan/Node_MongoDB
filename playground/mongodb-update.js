@@ -15,7 +15,7 @@ MongoClient.connect(url, (error, client) => {
 
   const db = client.db(myTODOAppDB);
 
-  //Find one and update.
+  //Find one document and update.
   db.collection(myTODOAppMyTODOsCollection).findOneAndUpdate({
     _id: new ObjectID("5b044526591bae97740dbdf9")
   },{
@@ -30,6 +30,7 @@ MongoClient.connect(url, (error, client) => {
     console.log(`Could not find one document and udpate in MongoDB due to: ${error}`);
   })
 
+  //Find one document and update multiple properties
   db.collection(myTODOAppUsersCollection).findOneAndUpdate({
     _id: new ObjectID("5b02fa9b79d3d0178ae63a88")
   },{
