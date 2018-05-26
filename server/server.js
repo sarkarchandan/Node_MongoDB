@@ -4,7 +4,6 @@ const {mongoose} = require("./db/mongoose-db");
 const {Todo} = require("./model/Todo-model");
 const {User} = require("./model/User-model");
 
-
 const app = express();
 
 //Setting Middleware
@@ -25,6 +24,15 @@ app.post("/todos", (request, response) => {
 
 //GET /todos/ , /todos/{id}
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
-});
+if(!module.parent) {
+  app.listen(3000, () => {
+    console.log("Server started on port 3000");
+  });
+}
+
+
+
+
+module.exports = {
+  app
+}
