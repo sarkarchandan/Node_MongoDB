@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-const myTODOAppDB = "TODOApp";
-const url = `mongodb://localhost:27017/${myTODOAppDB}`;
-
 mongoose.Promise = global.Promise;
-mongoose.connect(url)
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
   console.log("Mongoose connected to MongoDB");
 })
