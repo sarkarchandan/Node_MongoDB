@@ -58,6 +58,33 @@ app.get("/todos/:id", (request,response) => {
   });
 });
 
+//DELETE /todos/:id
+app.delete("/todos/:id", (request, response) => {
+
+  const {id} = request.params;
+
+  if(!ObjectID.isValid(id)) {
+    return response.status(404).send(
+      {
+        message: "Invalid ID"
+      }
+    );
+  }
+
+  Todo.findByIdAndRemove(id)
+  .then((todo) => {
+    if(!todo) {
+      return response.status(404).send();
+    }
+    return response.status(200).send(todo);
+  })
+  .catch((error) => {
+    response.status(400).send(error);
+  });
+  
+});
+
+
 if(!module.parent) {
   app.listen(port, () => {
     console.log(`Server is listening on port: ${port}`);
