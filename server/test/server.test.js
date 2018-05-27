@@ -11,7 +11,9 @@ const todos = [
   },
   {
     _id: new ObjectID(),
-    text: "Play Horizon Zero Dawn"
+    text: "Play Horizon Zero Dawn",
+    completed: true,
+    completedAt: 333
   }
 ];
 
@@ -178,3 +180,72 @@ describe("DELETE /todos/:id", () => {
 
 });
 
+
+describe("PATCH /todos/:id", () => {
+
+  it("should update todo to completed", (done) => {
+    
+    supertest(app)
+    .patch(`/todos/${todos[0]._id.toHexString()}`)
+    .send(
+      {
+        text: "Completed playing Detroit Become Human",
+        completed: true
+      }
+    )
+    .expect(200)
+    .expect((response) => {
+      expect(response.body.text).toBe("Completed playing Detroit Become Human");
+      expect(response.body.completedAt).toBeA("number");
+    })
+    .end((error, response) => {
+      if(error) {
+        return done(error);
+      }
+
+      Todo.findById(todos[0]._id)
+      .then((todo) => {
+        expect(todo.text).toBe("Completed playing Detroit Become Human");
+        expect(todo.completed).toBe(true);
+        expect(todo.completedAt).toBeA("number");
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+  });
+
+  it("should clear completed at when todo is not completed", (done) => {
+
+    supertest(app)
+    .patch(`/todos/${todos[1]._id.toHexString()}`)
+    .send(
+      {
+        completed: false
+      }
+    )
+    .expect(200)
+    .expect((response) => {
+      expect(response.body.completed).toBe(false);
+      expect(response.body.completedAt).toNotExist();
+    })
+    .end((error, response) => {
+
+      if(error) {
+        return done(error);
+      }
+
+      Todo.findById(todos[1]._id)
+      .then((todo) => {
+        expect(todo.completed).toBe(false);
+        expect(todo.completedAt).toNotExist();
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+  });
+
+});

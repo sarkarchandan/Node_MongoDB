@@ -91,8 +91,6 @@ app.patch("/todos/:id", (request, response) => {
   const {id} = request.params;
   const body = lodash.pick(request.body, ["text","completed"]);
 
-  // console.log("Completed", completed);
-
   if(!ObjectID.isValid(id)) {
     return response.status(404).send(
       {
