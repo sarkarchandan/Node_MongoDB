@@ -1,4 +1,5 @@
 const express = require("express");
+const lodash = require("lodash");
 const bodyParser = require("body-parser");
 const {mongoose} = require("./db/mongoose-db");
 const {Todo} = require("./model/Todo-model");
@@ -82,6 +83,42 @@ app.delete("/todos/:id", (request, response) => {
     response.status(400).send(error);
   });
 
+});
+
+
+app.patch("/todos/:id", (request, response) => {
+
+  const {id} = request.params;
+  const body = lodash.pick(request.body, ["text","completed"]);
+
+  // console.log("Completed", completed);
+
+  if(!ObjectID.isValid(id)) {
+    return response.status(404).send(
+      {
+        message: "Invalid ID"
+      }
+    );
+  }
+
+  if(lodash.isBoolean(body.completed) && body.completed) {
+    body.completedAt = new Date().getTime();
+  }else {
+    body.completed = false;
+    body.completedAt = null;
+  }
+
+  Todo.findByIdAndUpdate(id,
+  { $set: body },
+  { new: true })
+  .then((todo) => {
+    if(!todo) {
+      return response.status(404).send();
+    }
+    response.send(todo);
+  }).catch((error) => {
+    response.status(400).send(error);
+  });
 });
 
 
