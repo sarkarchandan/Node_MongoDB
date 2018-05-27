@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
 const myTODOAppDB = "TODOApp";
-const url = `mongodb://localhost:27017/${myTODOAppDB}`;
+// const url = `mongodb://localhost:27017/${myTODOAppDB}`;
+
+const url = "mongodb://sarkar1986.chandan:Corleonevgl#86@ds237620.mlab.com:37620/todoappdb"
 
 mongoose.Promise = global.Promise;
 mongoose.connect(url)

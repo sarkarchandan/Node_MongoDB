@@ -7,6 +7,8 @@ const {ObjectID} = require("mongodb");
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 //Setting Middleware
 app.use(bodyParser.json());
 
@@ -57,8 +59,8 @@ app.get("/todos/:id", (request,response) => {
 });
 
 if(!module.parent) {
-  app.listen(3000, () => {
-    console.log("Server started on port 3000");
+  app.listen(port, () => {
+    console.log(`Server is listening on port: ${port}`);
   });
 }
 
