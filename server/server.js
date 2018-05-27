@@ -23,15 +23,23 @@ app.post("/todos", (request, response) => {
 });
 
 //GET /todos/ , /todos/{id}
+app.get("/todos", (request, response) => {
+
+  Todo.find().then((todos) => {
+    response.send({todos});
+  }).catch((error) => {
+    response.status(400).send(error);
+  });
+
+});
+
+
 
 if(!module.parent) {
   app.listen(3000, () => {
     console.log("Server started on port 3000");
   });
 }
-
-
-
 
 module.exports = {
   app
