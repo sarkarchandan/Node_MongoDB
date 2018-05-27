@@ -92,5 +92,29 @@ describe("GET /todos", () => {
     }).end(done);
   });
 
+  // it("should get todo by id", (done) => {
+  //   const id = "5b0a910d0a9eb684ad673fa5"
+  //   supertest(app)
+  //   .get(`/todos/${id}`)
+  //   .expect(200)
+  //   .expect((todo) => {
+  //     expect(todo.text).toBe("Play Detroit Become Human")
+  //   })
+  //   .end(done);
+  // });
+
+  // it("should get error message for invalid id", (done) => {
+
+  //   const id = 123;
+  //   supertest(app)
+  //   .get(`/todos/${id}`)
+  //   .expect(404)
+  //   .expect((response) => {
+  //     expect(response.message).toBe("Invalid ID")
+  //   })
+  //   .end(done);
+
+  // });
+
 });
 
