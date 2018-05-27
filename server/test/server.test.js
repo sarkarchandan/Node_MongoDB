@@ -1,14 +1,16 @@
 const supertest = require("supertest");
 const expect = require("expect");
-
+const {ObjectID} = require("mongodb");
 const {app} = require("./../server");
 const {Todo} = require("./../model/Todo-model");
 
 const todos = [
   {
+    _id: new ObjectID(),
     text: "Play Detroit Become Human"
   },
   {
+    _id: new ObjectID(),
     text: "Play Horizon Zero Dawn"
   }
 ];
@@ -92,29 +94,37 @@ describe("GET /todos", () => {
     }).end(done);
   });
 
-  // it("should get todo by id", (done) => {
-  //   const id = "5b0a910d0a9eb684ad673fa5"
-  //   supertest(app)
-  //   .get(`/todos/${id}`)
-  //   .expect(200)
-  //   .expect((todo) => {
-  //     expect(todo.text).toBe("Play Detroit Become Human")
-  //   })
-  //   .end(done);
-  // });
+});
 
-  // it("should get error message for invalid id", (done) => {
+describe("GET /todos/:id", () => {
 
-  //   const id = 123;
-  //   supertest(app)
-  //   .get(`/todos/${id}`)
-  //   .expect(404)
-  //   .expect((response) => {
-  //     expect(response.message).toBe("Invalid ID")
-  //   })
-  //   .end(done);
+  it("should get todo by id", (done) => {
+    supertest(app)
+    .get(`/todos/${todos[0]._id.toHexString()}`)
+    .expect(200)
+    .expect((response) => {
+      expect(response.body.text).toBe(todos[0].text);
+    })
+    .end(done);
+  });
 
-  // });
+  it("should return a 404 if todo not found", (done) => {
+
+    supertest(app)
+    .get(`/todos/${new ObjectID().toHexString()}`)
+    .expect(404)
+    .end(done);
+
+  });
+
+  it("should return a 404 for non-ObjectID", (done) => {
+
+    supertest(app)
+    .get(`/todos/123`)
+    .expect(404)
+    .end(done);
+
+  });
 
 });
 
